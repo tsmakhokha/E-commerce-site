@@ -40,7 +40,7 @@
 <a href="customer_register.php">Register</a>
 </li>
 <li>
-<a href="checkout.php">my account</a>
+<a href="customer/my_account.php">my account</a>
 
 </li>
 <li>
@@ -97,7 +97,7 @@
 </li>
 
 <li>
-<a href="checkout.php">My account</a>
+<a href="customer/my_account.php">My account</a>
 </li>
 
 <li>

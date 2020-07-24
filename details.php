@@ -28,7 +28,7 @@
 			<ul class="menu">
 				<!-- top menu start-->
 				<li><a href="customer_register.php">Register</a> </li>
-				<li><a href="checkout.php">my account</a> </li>
+				<li><a href="customer/my_account.php">my account</a> </li>
 				<li><a href="cart.php">Cart</a> </li>
 				<li><a href="checkout.php">Login</a> </li>
 			</ul>
@@ -56,7 +56,7 @@
 					<!-- navbar menu list -->
 					<li><a href="index.php">Home</a> </li>
 					<li class="active"><a href="shop.php">Shop</a> </li>
-					<li><a href="checkout.php">My account</a> </li>
+					<li><a href="customer/my_account.php">My account</a> </li>
 					<li><a href="cart.php">Cart</a> </li>
 					<li><a href="contact.php">Contact us</a> </li>
 				</ul>
@@ -173,15 +173,15 @@
 						<!-- product options (size/quantity) ends --></div>
 					<div id="thumbs" class="row">
 						<div class="col-xs-4">
-							<a class="thumb" href="#">
+							<a data-target="myCarousel" data-slide-to="0" class="thumb" href="#">
 							<img alt="" class="img-responsive" src="admin_area/product_images/product5.png"></a>
 						</div>
 						<div class="col-xs-4">
-							<a class="thumb" href="#">
+							<a data-target="myCarousel" data-slide-to="1" class="thumb" href="#">
 							<img alt="" class="img-responsive" src="admin_area/product_images/product6.jpg"></a>
 						</div>
 						<div class="col-xs-4">
-							<a class="thumb" href="#">
+							<a data-target="myCarousel" data-slide-to="2"  class="thumb" href="#">
 							<img alt="" class="img-responsive" src="admin_area/product_images/product3.png"></a>
 						</div>
 					</div>
@@ -207,7 +207,7 @@
 				<hr>
 				
 				</div>
- <div id="row same-height-row"> <!--Suggested prod -->
+ <div id="row same-height-row"> <!--Suggested heading prod -->
      <div class="col-md-3 col-sm-6">
         <div class="box same-height headline">
            <h3 class="text-center">You may also like</h3>
@@ -217,9 +217,9 @@
      </div>
  
  
- </div> <!-- suggesed prod ends-->
+ </div> <!-- suggesed heading prod ends-->
  
- <div class="col-md-3 col-sm-6 center-responsive">
+ <div class="col-md-3 col-sm-6 center-responsive"> <!-- suggested prods-->
  
      <div class="product same-height">
          <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product2.jpg" alt=""></a>
