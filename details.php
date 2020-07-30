@@ -1,86 +1,11 @@
-<!DOCTYPE html>
-<html>
+<?php
+$active='Shop';
+include_once("includes/header.php");
 
-<head>
-<meta charset="UTF-8">
-<meta content="IE=edge" http-equiv="X-UA-Compatible">
-<meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport">
-<link href="font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
-<link href="font-awesome-4.7.0/css/font-awesome.css" rel="stylesheet">
-<link href="styles/style.css" rel="stylesheet">
-<link href="styles/bootstrap-337.min.css" rel="stylesheet">
-<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<meta content="" name="description">
-<title>Product Details</title>
-</head>
 
-<body>
+?>
 
-<div id="top">
-	<!--Top begining -->
-	<div class="container">
-		<!-- constainer start-->
-		<div class="col-md-6 offer">
-			<a class="btn btn-success btn-sm" href="#">Welcome</a>
-			<a href="checkout.php">Shopping cart total Price $300 | 4 items in your 
-			cart</a> </div>
-		<div class="col-md-6">
-			<ul class="menu">
-				<!-- top menu start-->
-				<li><a href="customer_register.php">Register</a> </li>
-				<li><a href="customer/my_account.php">my account</a> </li>
-				<li><a href="cart.php">Cart</a> </li>
-				<li><a href="checkout.php">Login</a> </li>
-			</ul>
-			<!-- end of  top menu--></div>
-	</div>
-	<!-- container end--></div>
-<!--End of top-->
-<div id="navbar" class="navbar navbar-default">
-	<!-- navbar begins-->
-	<div class="container">
-		<div class="navbar-header">
-			<a class="navbar-brand home" href="index.php">
-			<img alt="store logo" class="hidden-xs" src="images/ecom-store-logo.png">
-			<img alt="store logo" class="visible-xs" src="images/ecom-store-logo-mobile.png">
-			</a>
-			<button class="navbar-toggle" data-target="#navigation" data-toggle="collapse">
-			<span class="sr-only">Toggle Naviation</span>
-			<i class="fa fa-align-justify"></i></button>
-			<button class="navbar-toggle" data-target="#search" data-toggle="collapse">
-			<span class="sr-only">Toggle Search</span> <i class="fa fa-search">
-			</i></button></div>
-		<div id="navigation" class="navbar-collapse collapse">
-			<div class="padding-nav">
-				<ul class="nav navbar-nav left">
-					<!-- navbar menu list -->
-					<li><a href="index.php">Home</a> </li>
-					<li class="active"><a href="shop.php">Shop</a> </li>
-					<li><a href="customer/my_account.php">My account</a> </li>
-					<li><a href="cart.php">Cart</a> </li>
-					<li><a href="contact.php">Contact us</a> </li>
-				</ul>
-				<!-- End of menu items --></div>
-			<a class="btn navbar-btn btn-primary right" href="cart.php">
-			<i class="fa fa-shopping-cart"></i><span>4 items in cart</span> </a>
-			<div class="navbar-collapse collapse right">
-				<button class="btn btn-primary navbar-btn" data-target="#search" data-toggle="collapse" type="button">
-				<span class="sr-only">Toggle Search</span>
-				<i class="fa fa-search"></i></button></div>
-			<div id="search" class="collapse clearfix">
-				<form action="results.php" class="navbar-form" method="get">
-					<div class="input-group">
-						<input class="form-control" name="user_query" placeholder="Search" required="" type="text">
-						<span class="input-group-btn">
-						<button class="btn btn-primary" name="search" type="submit" value="Search">
-						<!-- buton for search and display results on results page-->
-						<i class="fa fa-search"></i></button></span></div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- navbar ends-->
+
 <div id="content">
 	<!-- content begins -->
 	<div class="container">
@@ -88,15 +13,54 @@
 			<ul class="breadcrumb">
 				<li><a href="index.php">Home</a> </li>
 				<li>Shop</li>
+                <li>
+                    <a href="shop.php?p_cat=<?php echo $p_cat_id;?>"><?php echo $p_cat_title; ?></a>
+                </li>
+                <li><?php echo $pro_title; ?></li>
 			</ul>
 		</div>
 		<div class="col-md-3">
-			<!-- sidebar menu --><?php
-        
-        include("includes/sidebar.php");
-        
-        ?></div>
-		<!-- sidebar menu end -->
+			<!-- sidebar menu --><div class="panel panel-default sidebar-menu"> <!-- sidebar menu-->
+   <div class="panel-heading">
+      <h3 class="panel-title">Products Category</h3>
+   
+   </div>
+
+  <div class="panel-body">
+  
+     <ul class="nav nav-pills nav-stacked category-menu"><!-- category menu -->
+         
+         <?php
+         
+         getPCats();
+         
+         ?>
+         
+     </ul> <!-- category menu -->
+  
+  </div>
+</div> <!-- sidebar menu ends -->
+
+<div class="panel panel-default sidebar-menu"> <!-- sidebar menu-->
+   <div class="panel-heading">
+      <h3 class="panel-title">Category</h3>
+   
+   </div>
+
+  <div class="panel-body">
+  
+     <ul class="nav nav-pills nav-stacked category-menu"><!-- category menu -->
+              <?php
+         
+         getCats();
+         
+         ?>
+     </ul> <!-- category menu -->
+  
+  </div>
+</div> <!-- sidebar menu ends -->
+        </div>
+            
 		<div class="col-md-9">
 			<div id="productMain" class="row">
 				<div class="col-sm-6">
@@ -113,16 +77,16 @@
 							<div class="carousel-inner">
 								<div class="item active">
 									<center>
-									<img alt="1st" class="img-responsive" src="admin_area/product_images/product3.png">
+									<img alt="1st" class="img-responsive" src="admin_area/product_images/<?php echo $pro_img1;?>">
 									</center></div>
 								<div class="item">
-                         <centre><img alt="2nd" class="img-responsive" src="admin_area/product_images/product5.png"></centre>
+                         <centre><img alt="2nd" class="img-responsive" src="admin_area/product_images/<?php echo $pro_img2;?>"></centre>
                          
                          
                          	   </div>
 								<div class="item">
 									<center>
-									<img alt="3rd" class="img-responsive" src="admin_area/product_images/product6.jpg"></center>
+									<img alt="3rd" class="img-responsive" src="admin_area/product_images/<?php echo $pro_img3;?>"></center>
 								</div>
 							</div>
 							<a class="left carousel-control" data-slide="prev" href="#myCarousel">
@@ -138,9 +102,16 @@
 				<div class="col-sm-6">
 					<!-- Product title -->
 					<div class="box">
-						<h1 class="text-center">Baby what what</h1>
-						<form action="details.php" class="form-horizontal" method="post">
-							<!-- product options (size/quantity -->
+						<h1 class="text-center"><?php echo $pro_title;?></h1>
+						
+                        
+                        <form action="details.php?add_cart=<?php echo $product_id;?>" class="form-horizontal" method="post">
+							
+                             <?php
+                               add_cart();
+                            ?>
+                                
+                            <!-- product options (size/quantity -->
 							<div class="form-group">
 								<label class="col-md-5 control-label" for="">Product 
 								Quantity</label>
@@ -156,16 +127,16 @@
 							<div class="form-group">
 								<label class="col-md-5 control-label">Product Size</label>
 								<div class="col-md-7">
-									<select class="form-control" name="product_size">
-									<option>Select Size</option>
-									<option>X-small</option>
-									<option>Small</option>
-									<option>Medium</option>
-									<option>Large</option>
-									<option>X-Large</option>
+									<select class="form-control" name="product_size" required oninput="setCustomValidity('')" oninvalid="setCustomValidity('Please select a size for the product')">
+									<option value="" disabled selected>Select Size</option>
+									<option value="X-smal">X-small</option>
+									<option value="Small">Small</option>
+									<option value="Medium">Medium</option>
+									<option value="Large">Large</option>
+									<option value="X-large">X-Large</option>
 									</select> </div>
 							</div>
-							<p class="price">R50</p>
+							<p class="price">R <?php echo $pro_price;?></p>
 							<p class="text-center buttons">
 							<button class="btn btn-primary i fa fa-shopping-cart">
 							Add to cart</button></p>
@@ -173,16 +144,16 @@
 						<!-- product options (size/quantity) ends --></div>
 					<div id="thumbs" class="row">
 						<div class="col-xs-4">
-							<a data-target="myCarousel" data-slide-to="0" class="thumb" href="#">
-							<img alt="" class="img-responsive" src="admin_area/product_images/product5.png"></a>
+							<a data-target="#myCarousel" data-slide-to="0" class="thumb" href="#">
+							<img alt="" class="img-responsive" src="admin_area/product_images/<?php echo $pro_img1;?>"></a>
 						</div>
 						<div class="col-xs-4">
-							<a data-target="myCarousel" data-slide-to="1" class="thumb" href="#">
-							<img alt="" class="img-responsive" src="admin_area/product_images/product6.jpg"></a>
+							<a data-target="#myCarousel" data-slide-to="1" class="thumb" href="#">
+							<img alt="" class="img-responsive" src="admin_area/product_images/<?php echo $pro_img2;?>"></a>
 						</div>
 						<div class="col-xs-4">
-							<a data-target="myCarousel" data-slide-to="2"  class="thumb" href="#">
-							<img alt="" class="img-responsive" src="admin_area/product_images/product3.png"></a>
+							<a data-target="#myCarousel" data-slide-to="2"  class="thumb" href="#">
+							<img alt="" class="img-responsive" src="admin_area/product_images/<?php echo $pro_img3;?>"></a>
 						</div>
 					</div>
 				</div>
@@ -192,7 +163,7 @@
 				
 				<h4>About product</h4>
 				<p>
-				This is a stylish shirt. This is a stylish shirt. This is a stylish shirt. This is a stylish shirt. This is a stylish shirt. This is a stylish shirt. This is a stylish shirt. This is a stylish shirt.
+				<?php echo $pro_desc;?>
 				</p>
 				
 				<h4>Size</h4>
@@ -215,42 +186,44 @@
         </div> 
      
      </div>
- 
- 
- </div> <!-- suggesed heading prod ends-->
- 
- <div class="col-md-3 col-sm-6 center-responsive"> <!-- suggested prods-->
- 
-     <div class="product same-height">
-         <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product2.jpg" alt=""></a>
-         <div class="text">
-         <h3><a href="details.php">Baby what what</a></h3>
-         <p class="price">R35</p>
+     <?php 
+     
+     $get_products = "select * from products order by rand() LIMIT 0,2";
+     
+     $run_products = mysqli_query($con, $get_products);
+     
+     while ($row_products=mysqli_fetch_array($run_products)){
+         
+         $pro_id = $row_products['product_id'];
+         $pro_title = $row_products['product_title'];
+         $pro_img1 = $row_products['product_img1'];
+         $pro_price = $row_products['product_price'];
+         
+         echo "
+         
+         <div class='col-md-4 col-sm-6 center-responsive'>
+             <div class='product same-height'>
+               <a href='details.php?pro_id=$pro_id'>
+                  <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+               </a>
+             <div class='text'>
+             
+                <h3> <a href='details.php?pro_id=$pro_id'> $pro_title </a></h3>
+                
+                <p class='price'>
+                R $pro_price
+                </p>
+             </div>
+             </div>
+         
          </div>
          
-     </div>
- </div>
- <div class="col-md-3 col-sm-6 center-responsive">
- 
-     <div class="product same-height">
-         <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product1.jpg" alt=""></a>
-         <div class="text">
-         <h3><a href="details.php">Courage shirt</a></h3>
-         <p class="price">R85</p>
-         </div>
+         ";
          
-     </div>
- </div>
-<div class="col-md-3 col-sm-6 center-responsive">
- 
-     <div class="product same-height">
-         <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product4.jpg" alt=""></a>
-         <div class="text">
-         <h3><a href="details.php">Shirt</a></h3>
-         <p class="price">R105</p>
-         </div>
-         
-     </div>
+     }
+     
+     ?>
+     
  </div>
 
 				

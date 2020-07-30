@@ -1,158 +1,7 @@
-<!DOCTYPE html>
-<html  >
-<head>
-  
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
- 
-  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
-  <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.css">
-  <link rel="stylesheet" href="styles/style.css">
-  <link rel="stylesheet" href="styles/bootstrap-337.min.css">
-  <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
-   
-   
- <meta name="description" content="">
-  
-  <title>Home</title>
-  
-  
-  
-</head>
-<body>
-<div id="top"> <!--Top begining -->
-
-<div class="container"> <!-- constainer start-->
-
-<div class="col-md-6 offer">
-
-<a href="#" class="btn btn-success btn-sm">Welcome</a>
-<a href="checkout.php"> Shopping cart total Price $300 | 4 items in your cart</a>
-
-
-</div> 
-
-<div class="col-md-6"> 
-<ul class="menu"><!-- top menu start-->
-
-<li>
-<a href="customer_register.php">Register</a>
-</li>
-<li>
-<a href="customer/my_account.php">my account</a>
-
-</li>
-<li>
-<a href="cart.php">Cart</a>
-
-</li>
-<li>
-<a href="checkout.php">Login</a>
-</li>
-
-</ul><!-- end of  top menu-->
-</div>
-</div> <!-- container end-->
-
-</div> <!--End of top-->
-
-<div id="navbar" class="navbar navbar-default"> <!-- navbar begins-->
-<div class="container">
-
-<div class="navbar-header">
-
-<a href="index.php" class="navbar-brand home">
-
-<img src="images/ecom-store-logo.png" alt="store logo" class="hidden-xs">
-<img src="images/ecom-store-logo-mobile.png" alt="store logo" class="visible-xs">
-
-</a>
-
-<button class="navbar-toggle" data-toggle="collapse" data-target="#navigation">
-<span class="sr-only">Toggle Naviation</span>
-<i class="fa fa-align-justify"></i>
-</button>
-
-<button class="navbar-toggle" data-toggle="collapse" data-target="#search">
-<span class="sr-only">Toggle Search</span>
-<i class="fa fa-search"></i>
-</button>
-
-
-</div>
-
-<div class="navbar-collapse collapse" id="navigation">
-
-<div class="padding-nav">
-
-<ul class="nav navbar-nav left"> <!-- navbar menu list -->
-
-<li>
-<a href="index.php">Home</a>
-</li>
-
-<li >
-<a href="shop.php">Shop</a>
-</li>
-
-<li>
-<a href="customer/my_account.php">My account</a>
-</li>
-
-<li class="active">
-<a href="cart.php">Cart</a>
-</li>
-
-<li>
-<a href="contact.php">Contact us</a>
-</li>
-
-</ul> <!-- End of menu items -->  
-
-</div>
- <a href="cart.php" class="btn navbar-btn btn-primary right">
- <i class="fa fa-shopping-cart"></i>
- <span>4 items in cart</span>
- 
- </a>
-<div class="navbar-collapse collapse right">
-
-<button class="btn btn-primary navbar-btn" type="button" data-toggle="collapse" data-target="#search">
-
-<span class="sr-only">Toggle Search</span>
-<i class="fa fa-search"></i>
-</button> 
-
-
-</div> 
-
-<div class="collapse clearfix" id="search">
-
-<form method="get" action="results.php" class="navbar-form">
-<div class="input-group">
-
-<input type="text" class="form-control" placeholder="Search" name="user_query" required>
-<span class="input-group-btn">
-<button type="submit" name="search" value="Search" class="btn btn-primary"> <!-- buton for search and display results on results page-->
-
-<i class="fa fa-search"></i>
-
-</button> 
-</span>
-</div>
-
-</form>
-
-</div>
-</div>
-
- 
-</div>
-
-
-</div><!-- navbar ends-->
-
+<?php
+$active='Cart';
+include("includes/header.php");
+?>
 <div id="content"> <!-- content begins -->
 
    <div class="container">
@@ -176,8 +25,17 @@
              <form action="cart.php" method="post" enctype="multipart/form-data">
              
              <h1>Shopping cart</h1>
+                 
+                 <?php
+                 $ip_add = getRealIpUser();
+                 
+                 $connect_cart = "select * from cart where ip_add='$ip_add'";
+                 
+                 $run_cart = mysqli_query($con,$connect_cart);
+                 $count = mysqli_num_rows($run_cart);
+                 ?>
              
-             <p class="text-muted">You have 3 items in your cart</p>
+             <p class="text-muted">You have <?php  echo $count; ?> items in your cart</p>
              
              <div class="table-responsive">
              
@@ -189,7 +47,7 @@
                              
                              <th colspan="2">Product</th>
                             <th>Quntity</th>
-                            <th>Unit price</th>
+                            <th>Product price</th>
                             <th>Size</th>
                             <th colspan="1">Clear cart</th>
                             <th colspan="2">Subtotal</th>
@@ -200,127 +58,79 @@
                        </thead>
                        
                        <tbody>
+                           
+                           <?php
+                           $total = 0;
+                           
+                           while($row_cart=mysqli_fetch_array($run_cart)){
+                               $pro_id = $row_cart['p_id'];
+                            $pro_size = $row_cart['size'];
+                            $pro_qty = $row_cart['qty'];
+                           
+                               $get_products = "select * from products where product_id='$pro_id'";
+                           
+                               $run_products = mysqli_query($con, $get_products);
+                               
+                               while($row_products=mysqli_fetch_array($run_products)){
+                                   
+                                   $product_title = $row_products['product_title'];
+                                   $product_img1 = $row_products['product_img1'];
+                                   $only_price = $row_products['product_price'];  //price for 1 item in cart
+                               
+                                   $sub_total = $row_products['product_price'] * $pro_qty;
+                                   
+                                   $total += $sub_total;
+                               
+                           ?>
+                           
                            <tr>
                            
                                 <td>
                                 
                                 
-                                    <img class="img-responsive" src="admin_area/product_images/product3.png" alt="prod 3">
+                                    <img class="img-responsive" src="admin_area/product_images/<?php echo $product_img1;?>" alt="product">
                                 
                                 </td>
                            <td>
                            
-                               <a href="#">Female shirt</a>
+                               <a href="details.php?pro_id=<?php echo $pro_id; ?>"><?php echo $product_title;?></a>
                            </td>
                            
                            <td>
-                              2
+                              <?php echo $pro_qty;?>
                            </td>
                            
                            <td>
-                              R50
+                              <?php echo $only_price;?>
+                           
+                           </td>
+                           
+                              
+                           <td>
+                               
+                              <?php echo $pro_size;?>
                            
                            </td>
                            
                            <td>
-                               Large
-                           
+                               <input type="checkbox" name="remove[]" value="<?php echo $pro_id;?>">
                            </td>
                            
                            <td>
-                               <input type="checkbox" name="remove[]">
-                           </td>
-                           
-                           <td>
-                            R100
+                            R <?php echo $sub_total;?>
                            </td>
                            </tr>
-                       
+                       <?php
+                               }
+                           }
+                           ?>
                        </tbody>
-                       
-                       <tbody>
-                           <tr>
-                           
-                                <td>
-                                
-                                
-                                    <img class="img-responsive" src="admin_area/product_images/product1.jpg" alt="prod 3">
-                                
-                                </td>
-                           <td>
-                           
-                               <a href="#">Courage shirt</a>
-                           </td>
-                           
-                           <td>
-                              2
-                           </td>
-                           
-                           <td>
-                              R50
-                           
-                           </td>
-                           
-                           <td>
-                               Large
-                           
-                           </td>
-                           
-                           <td>
-                               <input type="checkbox" name="remove[]">
-                           </td>
-                           
-                           <td>
-                            R100
-                           </td>
-                           </tr>
-                       
-                       </tbody>
-                    <tbody>
-                           <tr>
-                           
-                                <td>
-                                
-                                
-                                    <img class="img-responsive" src="admin_area/product_images/product5.png" alt="prod 3">
-                                
-                                </td>
-                           <td>
-                           
-                               <a href="#">vest</a>
-                           </td>
-                           
-                           <td>
-                              2
-                           </td>
-                           
-                           <td>
-                              R50
-                           
-                           </td>
-                           
-                           <td>
-                               Large
-                           
-                           </td>
-                           
-                           <td>
-                               <input type="checkbox" name="remove[]">
-                           </td>
-                           
-                           <td>
-                            R100
-                           </td>
-                           </tr>
-                       
-                       </tbody>
-                    
-                    
+                     
                     <tfoot>
                     
                        <tr>
                            <th colspan="5">Total</th>
-                           <td colspan="2">R300</td>
+                           <td colspan="2"><strong>R <?php echo $total;?></strong></td>
                        
                        </tr>
                     
@@ -334,7 +144,7 @@
              
                  <div class="pull-left">
                  
-                      <a href="index.php" class="btn btn-default">
+                      <a href="shop.php" class="btn btn-default">
                       <i class="fa fa-chevron-left">  Back to shopping</i>
                       
                       </a>
@@ -362,7 +172,36 @@
         
         </div>
         
-        
+        <?php
+          
+          function update_cart(){
+              global $con;
+              
+              if (isset($_POST['update'])){
+                  
+                  foreach($_POST['remove'] as $remove_id){
+                      
+                      $delete_product = "delete from cart where p_id='$remove_id'";
+                      
+                      $run_delete = mysqli_query($con, $delete_product);
+                          
+                      if($run_delete){
+                          echo"
+                          <script>window.open('cart.php', '_self')</script>
+                          
+                          ";
+                      }
+                  }
+              }
+          }
+          
+          echo $up_cart = update_cart();
+          
+          
+          ;
+          
+          ?>
+          
         <div id="row same-height-row"> <!--Suggested heading prod -->
      <div class="col-md-3 col-sm-6">
         <div class="box same-height headline">
@@ -371,44 +210,45 @@
         </div> 
      
      </div>
- 
- 
- </div> <!-- suggesed heading prod ends-->
- 
- <div class="col-md-3 col-sm-6 center-responsive"> <!-- suggested prods-->
- 
-     <div class="product same-height">
-         <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product2.jpg" alt=""></a>
-         <div class="text">
-         <h3><a href="details.php">Baby what what</a></h3>
-         <p class="price">R35</p>
+
+ <?php 
+     
+     $get_products = "select * from products order by rand() LIMIT 0,2";
+     
+     $run_products = mysqli_query($con, $get_products);
+     
+     while ($row_products=mysqli_fetch_array($run_products)){
+         
+         $pro_id = $row_products['product_id'];
+         $pro_title = $row_products['product_title'];
+         $pro_img1 = $row_products['product_img1'];
+         $pro_price = $row_products['product_price'];
+         
+         echo "
+         
+         <div class='col-md-4 col-sm-6 center-responsive'>
+             <div class='product same-height'>
+               <a href='details.php?pro_id=$pro_id'>
+                  <img class='img-responsive' src='admin_area/product_images/$pro_img1'>
+               </a>
+             <div class='text'>
+             
+                <h3> <a href='details.php?pro_id=$pro_id'> $pro_title </a></h3>
+                
+                <p class='price'>
+                R $pro_price
+                </p>
+             </div>
+             </div>
+         
          </div>
          
-     </div>
- </div>
- <div class="col-md-3 col-sm-6 center-responsive">
- 
-     <div class="product same-height">
-         <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product1.jpg" alt=""></a>
-         <div class="text">
-         <h3><a href="details.php">Courage shirt</a></h3>
-         <p class="price">R85</p>
-         </div>
+         ";
          
-     </div>
+     }
+     
+     ?>
  </div>
-<div class="col-md-3 col-sm-6 center-responsive">
- 
-     <div class="product same-height">
-         <a href="details.php"><img class="img-responsive" src="admin_area/product_images/product4.jpg" alt=""></a>
-         <div class="text">
-         <h3><a href="details.php">Shirt</a></h3>
-         <p class="price">R105</p>
-         </div>
-         
-     </div>
- </div>
- 
  
  
 
@@ -431,8 +271,8 @@
                   
                       <tbody>
                           <tr>
-                               <td>Order sub-Tot</td>
-                               <td>R300</td>
+                               <td>Order sub-Total</td>
+                               <td>R <?php echo $total;?></td>
                           
                           
                           </tr>
@@ -448,7 +288,7 @@
                           </tr>
                                                 <tr class="total">
                              <td>Total</td>
-                             <td>R300</td>
+                             <td>R <?php echo $total;?></td>
                           </tr>
 
                       
